@@ -1,0 +1,50 @@
+This program will show the output of DHT22 (AM302) sensor on serial monitor when interfaced with Arduino Uno.
+
+Make the circuit diagram as per the following
+
+DHT PIN           Arduino Pin
+1                 +5v
+2                 7
+3                 NC
+4                 GND
+
+
+Download the library DHT from Arduino tool bar i.e. 
+Sketch-----> Manage Library------> serach DHT22------->DHT sensor library------> click on install button to get it installed into your system.
+
+Source code
+
+//Libraries
+#include <DHT.h>;
+
+//Constants
+#define DHTPIN 7     // what pin we're connected to
+#define DHTTYPE DHT22   // DHT 22  (AM2302)
+DHT dht(DHTPIN, DHTTYPE); //// Initialize DHT sensor for normal 16mhz Arduino
+
+
+//Variables
+
+float hum;  //Stores humidity value
+float temp; //Stores temperature value
+
+void setup()
+{
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop()
+{
+   
+    //Read data and store it to variables hum and temp
+    hum = dht.readHumidity();
+    temp= dht.readTemperature();
+    //Print temp and humidity values to serial monitor
+    Serial.print("Humidity: ");
+    Serial.print(hum);
+    Serial.print(" %, Temp: ");
+    Serial.print(temp);
+    Serial.println(" Celsius");
+    delay(1000); //Delay 1 sec
+}
